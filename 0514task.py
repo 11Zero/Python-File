@@ -10,10 +10,9 @@ stepName = 'Step-1' #需要输出的分析步
 E=300000000 # 材料弹性模量
 o1 = session.openOdb(name=odbName)
 session.viewports['Viewport: 1'].setValues(displayedObject=o1)
+s1f1_S = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['S']
 s1f1_E = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['E']
-tmpField = s1f1_E.getScalarField(
-    invariant=MAX_PRINCIPAL)*s1f1_E.getScalarField(
-    invariant=MAX_PRINCIPAL)*0.5*300000000
+tmpField = s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*0.5*s1f1_S.getScalarField(invariant=MAX_PRINCIPAL)/s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)
 currentOdb = session.odbs[odbName]
 scratchOdb = session.ScratchOdb(odb=currentOdb)
 sessionStep = scratchOdb.Step(name='Session Step', 
@@ -22,6 +21,17 @@ sessionStep = scratchOdb.Step(name='Session Step',
 sessionFrame = sessionStep.Frame(frameId=0, frameValue=0.0, 
     description='Session Frame')
 sessionField = sessionFrame.FieldOutput(name='Field-needed', 
-    description='s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*0.5*'+str(E), 
+    description='0.5*e*e*E', 
+    field=tmpField)
+
+s1f1_S = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['S']
+s1f1_E = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['E']
+tmpField = s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*0.5*s1f1_S.getScalarField(invariant=MAX_PRINCIPAL)/s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)
+currentOdb = session.odbs[odbName]
+scratchOdb = session.ScratchOdb(odb=currentOdb)
+sessionFrame = sessionStep.Frame(frameId=0, frameValue=0.0, 
+    description='Session Frame')
+sessionField = sessionFrame.FieldOutput(name='Field-needed1', 
+    description='0.5*e*e*E' ,
     field=tmpField)
 
