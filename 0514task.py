@@ -24,14 +24,4 @@ sessionField = sessionFrame.FieldOutput(name='Field-needed',
     description='0.5*e*e*E', 
     field=tmpField)
 
-s1f1_S = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['S']
-s1f1_E = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['E']
-tmpField = s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)*0.5*s1f1_S.getScalarField(invariant=MAX_PRINCIPAL)/s1f1_E.getScalarField(invariant=MAX_PRINCIPAL)
-currentOdb = session.odbs[odbName]
-scratchOdb = session.ScratchOdb(odb=currentOdb)
-sessionFrame = sessionStep.Frame(frameId=0, frameValue=0.0, 
-    description='Session Frame')
-sessionField = sessionFrame.FieldOutput(name='Field-needed1', 
-    description='0.5*e*e*E' ,
-    field=tmpField)
 
