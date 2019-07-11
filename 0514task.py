@@ -7,6 +7,7 @@ sys.path.insert(9, r'd:/Program Files/abaqus/6.14-1/code/python2.7/lib/abaqus_pl
 import odbCombineKernel
 odbName = 'D:/Program Files/abaqus/Temp/Job-1.odb' # odb文件位置
 stepName = 'Step-1' #需要输出的分析步
+E=300000000 # 材料弹性模量
 o1 = session.openOdb(name=odbName)
 session.viewports['Viewport: 1'].setValues(displayedObject=o1)
 s1f1_S = session.odbs[odbName].steps[stepName].frames[-1].fieldOutputs['S']
